@@ -7,6 +7,31 @@ const getAll = catchError(async(req, res) => {
     return res.json(products);
 });
 
+const create = catchError(async(req, res) => {
+    const { name, price, category } = req.body;
+    const product = await Product.create({   // insert into products () values ()
+        name: name,
+        price: price,
+        category: category
+    });
+    return res.status(201).json(product);
+});
+
+const getOne = catchError(async(req, res) => {
+    const { id } = req.params;
+    const product = await Product.findByPk(id);
+    return res.json(product);
+})
+
+const remove = catchError(async(req, res) => {
+    const { id } = req.params;
+    await Product.destroy({ where: { id } }); // delete from products where id = 
+    return res.sendStatus(204);
+})
+
 module.exports = {
-    getAll
+    getAll,
+    create,
+    getOne,
+    remove
 }
