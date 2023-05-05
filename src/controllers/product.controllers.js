@@ -3,7 +3,7 @@ const Product = require('../models/Product');
 
 const getAll = catchError(async(req, res) => {
     // Operaciones...
-    const products = await Product.findAll(); // select * from products;
+    const products = await Product.findAll({ order: ['id'] }); // select * from products;
     return res.json(products);
 });
 
@@ -29,9 +29,20 @@ const remove = catchError(async(req, res) => {
     return res.sendStatus(204);
 })
 
+const update = catchError(async(req, res) => {
+    const { id } = req.params;
+    const { name, price, category } = req.body;
+    const product = await Product.update(
+        { name, price, category }, 
+        { where: { id }, returning: true }
+    )
+    return res.json(product[1]);
+})
+
 module.exports = {
     getAll,
     create,
     getOne,
-    remove
+    remove,
+    update
 }

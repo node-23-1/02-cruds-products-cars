@@ -1,4 +1,4 @@
-const { getAll, create, getOne } = require('../controllers/car.controllers');
+const { getAll, create, getOne, remove, update } = require('../controllers/car.controllers');
 const express = require('express');
 
 const carRouter = express.Router();
@@ -9,5 +9,7 @@ carRouter.route("/") // /cars
 
 carRouter.route('/:id') // /cars/:id
 		.get(getOne)
+		.delete(remove)
+		.put(update)
 
 module.exports = carRouter;

@@ -14,7 +14,7 @@ const Product = sequelize.define('product', {
     category: {
         type: DataTypes.STRING,
         allowNull: false
-    },
+    }
 });
 
 module.exports = Product;
